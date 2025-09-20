@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar Audio</title>
+    <!-- Vincula Bootstrap para un diseño responsivo -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GBYlt51IDwwhpC1B5i4WENz7DZCUGmjB7D/gfUQxnFLq5fSR9mK9FsiI0J2j9+z8" crossorigin="anonymous">
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #f0f8ff;
+            font-family: 'Arial', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffecb3;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #ff6347;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: #2f4f4f;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            border-radius: 8px;
+            border: 2px solid #f0a500;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #ff6347;
+            color: white;
+            padding: 12px 20px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e53e00;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        /* Estilos responsive */
+        @media (max-width: 576px) {
+            .container {
+                padding: 15px;
+                margin: 20px auto;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #2f4f4f;
+            font-size: 14px;
+        }
+
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Estilos para opciones de descarga */
+        .download-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .download-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .download-option:hover {
+            border-color: #ff6347;
+            background-color: #fff5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 99, 71, 0.2);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .form-text {
+            color: #6c757d;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Descargar Audio o Video</h1>
+        
+        <div id="alert" class="alert"></div>
+        
+        <form id="downloadForm">
+            <div class="mb-3">
+                <label for="url" class="form-label">Ingrese la URL del video</label>
+                <input type="text" class="form-control" id="url" name="url" placeholder="https://www.youtube.com/watch?v=XXXXXX" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="filename" class="form-label">Nombre del archivo (opcional)</label>
+                <input type="text" class="form-control" id="filename" name="filename" placeholder="MiArchivo" maxlength="50">
+                <small class="form-text text-muted">Si no se especifica, se usará el título del video</small>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Tipo de descarga</label>
+                <div class="download-options">
+                    <div class="download-option">
+                        <button type="button" class="btn btn-success w-100 mb-2" onclick="startDownload('audio')">
+                            🎵 Descargar Solo Audio (MP3)
+                        </button>
+                        <small class="form-text text-muted">Extrae solo el audio del video en formato MP3</small>
+                    </div>
+                    
+                    <div class="download-option">
+                        <button type="button" class="btn btn-primary w-100 mb-2" onclick="startDownload('video')">
+                            📹 Descargar Video Completo (MP4)
+                        </button>
+                        <small class="form-text text-muted">Descarga el video completo en formato MP4</small>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="footer">
+            <p>&copy; 2025 | Todos los derechos reservados</p>
+        </div>
+    </div>
+
+
+    <!-- Agregar Bootstrap JS (opcional para elementos interactivos) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-Jr4rdzUBIQXy0+dAKfng6yxDBlT1Ap5rc1zVZ2/x5gH9S73h1c2tVUwD2L9q0nJl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-kQq+vJrZm/m58z7dfAf4Y5GpGn3aHujOBF0Y6pSlXs9J6ZZ6P6XIqdhpgVJKdK7P" crossorigin="anonymous"></script>
+    
+    <script>
+        // Función para validar URLs de video
+        function isValidVideoUrl(url) {
+            // URLs de YouTube
+            const youtubePatterns = [
+                /^https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+/,
+                /^https?:\/\/(www\.)?youtube\.com\/embed\/[\w-]+/,
+                /^https?:\/\/(www\.)?youtube\.com\/v\/[\w-]+/
+            ];
+            
+            // URLs de otras plataformas comunes
+            const otherPatterns = [
+                /^https?:\/\/(www\.)?(vimeo\.com|dailymotion\.com|twitch\.tv|facebook\.com|instagram\.com)/,
+                /^https?:\/\/(www\.)?(tiktok\.com|twitter\.com|x\.com)/
+            ];
+            
+            // Verificar patrones de YouTube
+            for (let pattern of youtubePatterns) {
+                if (pattern.test(url)) {
+                    return true;
+                }
+            }
+            
+            // Verificar otras plataformas
+            for (let pattern of otherPatterns) {
+                if (pattern.test(url)) {
+                    return true;
+                }
+            }
+            
+            // Patrón general para URLs válidas (fallback)
+            const generalPattern = /^https?:\/\/(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$/;
+            return generalPattern.test(url);
+        }
+        
+        // Función para mostrar alertas
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alert');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Función para obtener el usuario actual
+        function getCurrentUser() {
+            return 'USUARIO'; // Cambiar por el usuario real
+        }
+
+        
+        // Función principal para iniciar la descarga
+        async function startDownload(downloadType) {
+            const url = document.getElementById('url').value.trim();
+            const filename = document.getElementById('filename').value.trim();
+            
+            // Validar URL
+            if (!url) {
+                showAlert('Por favor, ingrese una URL válida', 'danger');
+                return;
+            }
+            
+            if (!isValidVideoUrl(url)) {
+                showAlert('Por favor, ingrese una URL válida de video (ejemplo: https://www.youtube.com/watch?v=...)', 'danger');
+                return;
+            }
+
+            // Determinar mensaje según el tipo de descarga
+            const typeMessage = downloadType === 'audio' ? 'audio (MP3)' : 'video (MP4)';
+            showAlert(`Iniciando descarga de ${typeMessage}...`, 'success');
+            
+            try {
+                // Crear formulario dinámico para enviar datos
+                const formData = new FormData();
+                formData.append('url', url);
+                formData.append('download_type', downloadType);
+                if (filename) {
+                    formData.append('filename', filename);
+                }
+                
+                const downloadResponse = await fetch('/download', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (downloadResponse.ok) {
+                    // Si la respuesta es exitosa, descargar el archivo
+                    const blob = await downloadResponse.blob();
+                    const downloadUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = downloadUrl;
+                    
+                    // Determinar extensión del archivo según el tipo de descarga
+                    const extension = downloadType === 'audio' ? 'mp3' : 'mp4';
+                    const defaultName = downloadType === 'audio' ? 'audio_descargado' : 'video_descargado';
+                    
+                    a.download = filename ? `${filename}.${extension}` : `${defaultName}.${extension}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(downloadUrl);
+                    document.body.removeChild(a);
+                    
+                    showAlert(`¡Descarga de ${typeMessage} iniciada! El navegador te preguntará dónde guardar el archivo.`, 'success');
+                } else {
+                    const errorText = await downloadResponse.text();
+                    showAlert(`Error: ${errorText}`, 'danger');
+                }
+                
+            } catch (error) {
+                showAlert(`Error durante la descarga: ${error.message}`, 'danger');
+            }
+        }
+
+    </script>
+</body>
+</html>
